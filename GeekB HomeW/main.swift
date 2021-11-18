@@ -1,9 +1,6 @@
-//
-//  main.swift
-//  GeekB HomeW
-//
+
 //  Created by Макс on 19.11.2021.
-//
+
 
 import Foundation
 
