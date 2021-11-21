@@ -17,7 +17,6 @@ if userAnsA != nil && userAnsB != nil && userAnsC != nil { // Проверка �
 } else {
     print("Error")
 }
-
 var d: Double = (b * b) - (4 * a * c) // Подсчёт дискриминанта
 if d < 0 {
     print("Корни отсутствуют")
@@ -37,7 +36,7 @@ let userCat1 = readLine()
 print("Введите второй катет треугольника: ")
 let userCat2 = readLine()
 var cat1: Double = 0; var cat2: Double = 0
-if userCat1 != nil && userCat2 != nil {
+if userCat1 != nil && userCat2 != nil { // Проверка на наличие значения и unwrap optional
     cat1 += Double(userCat1!)!
     cat2 += Double(userCat2!)!
 } else {
@@ -55,7 +54,7 @@ let userCashAmount = readLine()
 print("Введите ежегодный процент по вкладу:")
 let userPercentAmount = readLine()
 var cashAmount: Double = 0; var percentAmount: Double = 0
-if userCashAmount != nil && userPercentAmount != nil {
+if userCashAmount != nil && userPercentAmount != nil { // Проверка на наличие значения и unwrap optional
     cashAmount += Double(userCashAmount!)!
     percentAmount += Double(userPercentAmount!)! / 100
 } else {
