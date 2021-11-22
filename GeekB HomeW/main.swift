@@ -25,16 +25,16 @@ if userAnsA != nil && userAnsB != nil && userAnsC != nil { // Проверка �
     print("Error")
 }
 
-var d: Double = (b * b) - (4 * a * c) // Подсчёт дискриминанта
+var discriminant: Double = (b * b) - (4 * a * c)
 
-if d < 0 {
+if discriminant < 0 {
     print("Корни отсутствуют")
-} else if (d == 0) {
-    let x1 = (-b + d) / 2 * a
+} else if (discriminant == 0) {
+    let x1 = (-b + discriminant) / 2 * a
     print("При данных коэффициентах мы получаем нулевой дискриминант, следовательно оба корня будут равны:\(x1).")
 } else {
-    let x1 = (-b + sqrt(d)) / 2 * a
-    let x2 = (-b - sqrt(d)) / 2 * a
+    let x1 = (-b + sqrt(discriminant)) / 2 * a
+    let x2 = (-b - sqrt(discriminant)) / 2 * a
     print("Первый корень равен: \(x1), а второй: \(x2). \n \n")
 }
 
@@ -49,7 +49,7 @@ let userCat2 = readLine()
 
 var cat1: Double = 0
 var cat2: Double = 0
-if userCat1 != nil && userCat2 != nil { // Проверка на наличие значения и unwrap optional
+if userCat1 != nil && userCat2 != nil {
     cat1 += Double(userCat1!)!
     cat2 += Double(userCat2!)!
 } else {
@@ -74,7 +74,7 @@ let userPercentAmount = readLine()
 var cashAmount: Double = 0
 var percentAmount: Double = 0
 
-if userCashAmount != nil && userPercentAmount != nil { // Проверка на наличие значения и unwrap optional
+if userCashAmount != nil && userPercentAmount != nil {
     cashAmount += Double(userCashAmount!)!
     percentAmount += Double(userPercentAmount!)! / 100
 } else {
