@@ -17,7 +17,7 @@ var a: Double = 0
 var b: Double = 0
 var c: Double = 0
 
-if userAnsA != nil && userAnsB != nil && userAnsC != nil { // Проверка на наличие значения и unwrap optional
+if userAnsA != nil && userAnsB != nil && userAnsC != nil { 
     a += Double(userAnsA!)!
     b += Double(userAnsB!)!
     c += Double(userAnsC!)!
