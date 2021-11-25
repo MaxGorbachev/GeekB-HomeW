@@ -57,7 +57,4 @@ while p * p < maxOfArray {
     simpleArray = simpleArray.filter({$0 % p != 0})
     p += 1
 }
-<<<<<<< HEAD
-=======
-print(simpleArray)
->>>>>>> hw2
+
