@@ -1,72 +1,47 @@
-protocol MoneyAmountProtocol {
-    var billsCount: Int { get set }
+import Foundation
+enum WashingBoxError: Error {
+    case moneyAmountError
+    case stockAmountError
+    case stockMissnameError
 }
 
-enum DollarBill {
-    case oneDollar
-    case twoDollars
-    case fiveDollars
-    case tenDollars
-    case hundredDollars
+struct Stock {
+    let name: Liquid
+    var stockAmount: UInt
+    let pricePerGallon: UInt
 }
 
-struct Bill: MoneyAmountProtocol {
-    var billsCount: Int
-    var billAmount: DollarBill
+struct Liquid {
+    let name: String
 }
 
-extension Bill: CustomStringConvertible {
-    var description: String {
-        return "There is \(billsCount) of \(billAmount) in the pocket"
+class WashingBox {
+    var stock = ["Water": Stock(name: Liquid(name: "Water"), stockAmount: 400, pricePerGallon: 5),
+                 "Soap": Stock(name: Liquid(name: "Soap"), stockAmount: 100, pricePerGallon: 20),
+                 "Wax": Stock(name: Liquid(name: "Wax"), stockAmount: 50, pricePerGallon: 40),
+                 "Ceramic": Stock(name: Liquid(name: "Ceramic"), stockAmount: 20, pricePerGallon: 100)
+    ]
+
+    func washMyCar(liquidType: String, cashDeposit: UInt, liquidAmount: UInt) throws -> Liquid? {
+        var moneyDeposit = cashDeposit
+        guard let liquid = stock[liquidType] else { throw WashingBoxError.stockMissnameError}
+        guard liquid.stockAmount >= liquidAmount else { throw WashingBoxError.stockAmountError}
+        guard liquid.pricePerGallon * liquidAmount <= cashDeposit else { throw WashingBoxError.moneyAmountError }
+
+        var newLiquid = liquid
+        newLiquid.stockAmount -= liquidAmount
+        moneyDeposit -= newLiquid.pricePerGallon * liquidAmount
+        stock[liquidType] = newLiquid
+        print("You can wash your car with \(liquidAmount) of \(liquidType).")
+        moneyDeposit != 0 ? print("Your change is \(moneyDeposit).") : nil
+
+        return newLiquid.name
     }
 }
 
-struct Queue <T: MoneyAmountProtocol> {
-    private var bills: [T] = []
-
-    mutating func add(bill: T) {
-        bills.append(bill)
-    }
-
-    mutating func removeFirst() {
-        bills.removeFirst()
-    }
-
-    mutating func removeLast() {
-        bills.removeLast()
-    }
-
-    mutating func removeElement(position: Int)  {
-        if position < bills.count {
-            bills.remove(at: position)
-        } else { print("There's no \(position) position in this queue.") }
-    }
+let washBox = WashingBox()
+do {
+    try washBox.washMyCar(liquidType: "Water", cashDeposit: 1000, liquidAmount: 20)
+} catch let error {
+    print(error)
 }
-
-extension Queue {
-    func filtred (chosenCondition: (T) -> Bool) -> Queue<T> {
-        var newQueue = Queue<T>()
-        for value in bills where chosenCondition(value) {
-            newQueue.add(bill: value)
-        }
-        return newQueue
-    }
-}
-
-
-// Tests
-
-var wallet = Queue<Bill>()
-
-wallet.add(bill: .init(billsCount: 14, billAmount: .fiveDollars))
-wallet.add(bill: .init(billsCount: 11, billAmount: .hundredDollars))
-print(wallet)
-wallet.removeLast()
-print(wallet)
-wallet.add(bill: .init(billsCount: 5, billAmount: .hundredDollars))
-wallet.add(bill: .init(billsCount: 6, billAmount: .tenDollars))
-wallet.add(bill: .init(billsCount: 12, billAmount: .fiveDollars))
-wallet.add(bill: .init(billsCount: 9, billAmount: .twoDollars))
-print(wallet)
-wallet = wallet.filtred(chosenCondition: {$0.billsCount < 10})
-print(wallet)
